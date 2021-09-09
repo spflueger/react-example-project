@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib.auth.models import User
-from todo.models import TodoItem
 from django.contrib import admin
 from rest_framework import routers, serializers, viewsets
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from todo.serializer import TodoItemViewSet
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -36,19 +36,6 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class TodoItemSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = TodoItem
-        fields = ["text", "create_datum"]
-
-
-# ViewSets define the view behavior.
-class TodoItemViewSet(viewsets.ModelViewSet):
-    queryset = TodoItem.objects.all()
-    serializer_class = TodoItemSerializer
-
-
-
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
@@ -57,7 +44,7 @@ router.register(r"todoitems", TodoItemViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("", include(router.urls)),
+    path("api/", include(router.urls)),
     path("admin/", admin.site.urls),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
