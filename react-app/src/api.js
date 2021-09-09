@@ -15,8 +15,9 @@ export async function signin(username, password) {
   });
 }
 
-export function todoItems() {
-  return fetch("http://localhost:8000/todoitems/", {
+export async function todoItems() {
+  await new Promise((r) => setTimeout(r, 1000));
+  return fetch(API_ENDPOINT + "/todoitems/", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   }).then((res) => {

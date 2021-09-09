@@ -16,8 +16,6 @@ export default class Home extends React.Component {
     );
   }
 
-  // {text: , create_datum: }
-
   render() {
     console.log("rendering");
     return (
