@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar(props) {
   const [redirect, setRedirect] = useState(false);
   const signOut = function () {
     localStorage.removeItem("tokens");

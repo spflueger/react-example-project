@@ -14,3 +14,16 @@ export async function signin(username, password) {
     }
   });
 }
+
+export function todoItems() {
+  return fetch("http://localhost:8000/todoitems/", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw res;
+    }
+  });
+}
