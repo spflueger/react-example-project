@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib.auth.models import User
+from todo.models import TodoItem
 from django.contrib import admin
 from rest_framework import routers, serializers, viewsets
 from rest_framework_simplejwt.views import (
@@ -35,9 +36,23 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
+class TodoItemSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TodoItem
+        fields = ["text", "create_datum"]
+
+
+# ViewSets define the view behavior.
+class TodoItemViewSet(viewsets.ModelViewSet):
+    queryset = TodoItem.objects.all()
+    serializer_class = TodoItemSerializer
+
+
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r"users", UserViewSet)
+router.register(r"todoitems", TodoItemViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
